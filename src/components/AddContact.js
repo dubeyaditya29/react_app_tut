@@ -1,23 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 
-const AddContact = () => {
+const AddContact = (props) => {
+  const [contact, setContact] = useState({ name: "", email: "" });
+  const formHandler = (event) => {
+    //console.log("Inside formHandler");
+    event.preventDefault();
+    if (contact.name === "" || contact.email === "") {
+      alert("not working");
+      return;
+    }
+    props.addContactHandler(contact);
+    setContact({ name: "", email: "" });
+    //console.log(contact);
+  };
   return (
-    <div className="ui main">
+    <>
       <h2>Add Contact</h2>
-      <div className="ui form">
+      <form className="ui form" onSubmit={formHandler}>
         <div className="field">
-          <label for="name">Name</label>
-          <input type="text" id="name"></input>
+          <label>Name</label>
+          <input
+            type="text"
+            id="name"
+            value={contact.name}
+            onChange={(e) => {
+              setContact({ ...contact, name: e.target.value });
+            }}
+          ></input>
         </div>
         <div className="field">
-          <label for="email">Email</label>
-          <input type="text" id="email"></input>
+          <label>Email</label>
+          <input
+            type="text"
+            id="email"
+            value={contact.email}
+            onChange={(e) => {
+              setContact({ ...contact, email: e.target.value });
+            }}
+          ></input>
         </div>
-      </div>
-      <button type="button" className="ui button blue">
-        Add Now!
-      </button>
-    </div>
+        <button type="submit" className="ui button blue">
+          Add Now!
+        </button>
+      </form>
+    </>
   );
 };
 
